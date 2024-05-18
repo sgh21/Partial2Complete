@@ -20,7 +20,7 @@ Ruikai Cui, Shi Qiu, Saeed Anwar, Jiawei Liu, Chaoyue Xing, Jing Zhang, Nick Bar
 - Python >= 3.7
 - CUDA 11.6
 - Pytorch >= 1.12
-- open3d>=0.9
+- open3d>=0.14.1
 - transforms3d
 - pytorch3d
 - pyyaml
@@ -32,8 +32,14 @@ Ruikai Cui, Shi Qiu, Saeed Anwar, Jiawei Liu, Chaoyue Xing, Jing Zhang, Nick Bar
 
 Or you can setup the environment using `conda`:
 ```
-conda env create -n p2c
+https://anaconda.org/pytorch3d/pytorch3d/files
+conda create -n p2c python=3.9
+conda activate p2c
+pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu117
+conda install https://anaconda.org/pytorch3d/pytorch3d/0.7.5/download/linux-64/pytorch3d-0.7.5-py39_cu117_pyt1130.tar.bz2
 pip install -r requirements.txt
+pip install tensorboard
+pip install --upgrade protobuf==3.20.1
 ```
 
 Some packages are needed to train and evaluate the model.
@@ -42,9 +48,13 @@ Some packages are needed to train and evaluate the model.
 
 To build this, run the command below:
 ```
-bash install.sh
+python setup.py install --user
 ```
+Remenber to delete the last build files by other cofig environment!!! 
+Complie from scratch on your own environment.
 
+## Change Your cuda verson
+refer to https://blog.csdn.net/weixin_44711603/article/details/110233047
 ## Preparing the Data
 
 
@@ -83,6 +93,11 @@ To train a point cloud completion model from scratch, run:
 ```
 python main.py --config ./cfgs/EPN3D_models/P2C.yaml --exp_name your_exp_name
 ```
+## spy on your train
+
+# using tensorboard
+tensorboard --logdir=./experiments/P2C/EPN3D_models/TFBoard/ --samples_per_plugin images=1000
+
 
 ## pre-trained models
 
@@ -112,6 +127,6 @@ If you find our work useful to your research, please consider citing:
       archivePrefix={arXiv},
 }
 ```
-
+CUDA_LAUNCH_BLOCKING=1
 ## Acknowledgement
 This code borrowed heavily from [PoinTr](https://github.com/yuxumin/PoinTr). Thanks for their great work!
